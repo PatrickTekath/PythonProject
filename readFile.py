@@ -9,4 +9,8 @@ with open('train.json') as data_file:
 #print last ingredient of first recipe
 #pprint(data[0]['ingredients'][len(data[0]['ingredients'])-1])
 
-uniqueCuisine = set(cuisine for cuisine in data[::]['cuisine'])
+
+uniqueCuisines = (data[::][i]['cuisine'] for i in range(0,len(data)-1))
+uniqueCuisines = set(uniqueCuisines)
+
+print uniqueCuisines
