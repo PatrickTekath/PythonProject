@@ -12,5 +12,8 @@ with open('train.json') as data_file:
     data = json.load(data_file)
 
 #print ingredients from recipe 0
+stringOfIngredients = ''
 ingredients = data[1]['ingredients']
-print(ingredients[i] for i in range(0,len(ingredients)-1))
+for ingredient in ingredients:
+    stringOfIngredients += ingredient + ','
+print stringOfIngredients
