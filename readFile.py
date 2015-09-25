@@ -2,6 +2,7 @@
 import json
 from pprint import pprint
 
+
 #open json files in data
 with open('train.json') as data_file:
     data = json.load(data_file)
@@ -10,7 +11,7 @@ with open('train.json') as data_file:
 #pprint(data[0]['ingredients'][len(data[0]['ingredients'])-1])
 
 
-uniqueCuisines = (data[::][i]['cuisine'] for i in range(0,len(data)-1))
-uniqueCuisines = set(uniqueCuisines)
+#uniqueCuisines = (data[::][i]['cuisine'] for i in range(0,len(data)-1))
+#uniqueCuisines = set(uniqueCuisines)
 
-print uniqueCuisines
+#print uniqueCuisines

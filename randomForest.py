@@ -1,19 +1,28 @@
-from readFile import *
-from sklearn.datasets import load_iris
+from itertools import chain
+
+import nltk
+from pandas import Series, DataFrame
+from sklearn.cross_validation import train_test_split
 from sklearn.ensemble import RandomForestClassifier
-import pandas as pd
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics import classification_report
+import sklearn.metrics
+
+import matplotlib.pylab as plt
 import numpy as np
-import json
-from sympy.ntheory import factor_
-from statsmodels.sandbox.formula import Factor
+import pandas as pd
 
-#Wird am wahrscheinlichsten weitergefuehrt
-with open('train.json') as data_file:
-    data = json.load(data_file)
+# is most likely to get programmed
+# make training files
+trainRecipes = pd.read_json("train.json")
+trainRecipes['ingredients_string'] = [' '.join(z).strip() for z in trainRecipes['ingredients']]
 
-#print ingredients from recipe 0
-stringOfIngredients = ''
-ingredients = data[1]['ingredients']
-for ingredient in ingredients:
-    stringOfIngredients += ingredient + ','
-print stringOfIngredients
+# make test files
+testRecipes = pd.read_json("test.json")
+testRecipes['ingredients_string'] = [' '.join(z).strip() for z in testRecipes['ingredients']]
+
+# create a copy of trainRecipes and only filter out the ingredients
+copyOfIngredients_Training = trainRecipes['ingredients_string']
+copyOfIngredients_Test = testRecipes['ingredients_string']
+
+print copyOfIngredients_Training[1]
