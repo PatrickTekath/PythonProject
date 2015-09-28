@@ -42,7 +42,11 @@ forestCLS.fit(predictors_Training,cuisine)
 predictions = forestCLS.predict(predictors_Test)
 
 # store the predictions into a DataFrame
-testRecipes['predictions'] = predictions
+testRecipes['cuisine'] = predictions
 
-# print predictions
-print (testRecipes['predictions'])
+subID = testRecipes['id']
+subCuisine = testRecipes['cuisine']
+
+#print ("{0},{1}".format(testRecipes['id'],testRecipes['predictions']))
+
+testRecipes[['id','cuisine']].to_csv('results.csv', index = False)
