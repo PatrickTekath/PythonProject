@@ -1,31 +1,31 @@
-import pandas as pd
-import numpy as np
-import sklearn.cross_validation as cv
+"""
+Method is used to test various classifiers
+"""
+
+from skimage.feature.tests.test_register_translation import test_size_one_dimension_input
 import sklearn
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.ensemble.forest import ExtraTreesClassifier
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.svm import SVC
+
+import numpy as np
+import pandas as pd
 import readFile as rf
 import sklearn.cross_validation as cv
+import sklearn.cross_validation as cv
 
-'''
-Method is used to test various classifiers
-'''
-def testClassifiers(predTraining, predTesting, cuisinesTraining, cuisinesTesting, duration=10, classifier='s'):
-    print("Entering method")
+
+def testClassifiers(predTraining, predTesting, cuisinesTraining, cuisinesTesting, duration=1, classifier='s'):
     if(classifier == 's'):
-        print("initialize SVM")
         sumSVM = []
         for i in range(0,duration):
-            print(i)
             linSVM = SVC(kernel='linear')
-            print("SVM created")
-            linSVM.fit(predTraining, cuisinesTraining)
-            print("data fitted")
+            try:
+                linSVM.fit(predTraining, cuisinesTraining)
+            except ValueError:
+                print("Data could not be fitted. Please check your data files. Method aborted")
             sumSVM.append(linSVM.score(predTesting, cuisinesTesting))
-            print("score calculated")
-        print("done")
         return np.mean(sumSVM)
     elif(classifier=='e'):
         sumET = []
@@ -44,9 +44,5 @@ def testClassifiers(predTraining, predTesting, cuisinesTraining, cuisinesTesting
     else:
         print("A Classifier has not been given. Please name a Classifier using the characters s(SVM), e(ExtraTrees) and r(RandomForest). By default it is s.")
 
-def main():
-    training, testing, cuisinesTraining, cuisinesTesting = rf.readDocuments(splitData=True, splitRatio=0.33)
-    predictors_Training, predictors_Test, cuisine = rf.processDocuments(splitData=True, splitRatio=0.33)
-    print(testClassifiers(predictors_Training, predictors_Test, cuisinesTraining, cuisinesTesting, 2))
-main()
-    
+predTraining, predTesting, cuisinesTraining, cuisinesTesting = rf.processDocuments(split = True)
+print(testClassifiers(predTraining, predTesting, cuisinesTraining, cuisinesTesting))
