@@ -71,19 +71,17 @@ def processDocuments(split=False, splitRatio=0.25, extTrainingFile='', extTestFi
         trainRecipes = readTrainingDocument("train_mod.json")
         if(extTrainingFile):
             ingredientsTraining = pd.Series.from_csv(extTrainingFile, encoding='utf-8')
-            
-        
         else:
             training, testing = splitData(splitRatio)
        
             training['ingredients_string'] = [' '.join(i).strip() for i in training['ingredients']]
-            testing['ingredients_string'] = [' '.join(i).strip() for i in testing['ingredients']]
+            testing ['ingredients_string'] = [' '.join(i).strip() for i in testing ['ingredients']]
         
             ingredientsTraining = training['ingredients_string']
-            ingredientsTesting = testing['ingredients_string']
+            ingredientsTesting  = testing ['ingredients_string']
         
             cuisinesTraining = training['cuisine']
-            cuisinesTesting = testing['cuisine']
+            cuisinesTesting  = testing ['cuisine']
         
         vectorTraining = TfidfVectorizer(stop_words='english')
         vectorizedIngredients = vectorTraining.fit_transform(ingredientsTraining)

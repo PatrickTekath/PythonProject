@@ -15,7 +15,6 @@ import readFile as rf
 import sklearn.cross_validation as cv
 import sklearn.cross_validation as cv
 
-
 def testClassifiers(predTraining, predTesting, cuisinesTraining, cuisinesTesting, duration=1, classifier='s'):
     if(classifier == 's'):
         sumSVM = []
@@ -44,5 +43,6 @@ def testClassifiers(predTraining, predTesting, cuisinesTraining, cuisinesTesting
     else:
         print("A Classifier has not been given. Please name a Classifier using the characters s(SVM), e(ExtraTrees) and r(RandomForest). By default it is s.")
 
-predTraining, predTesting, cuisinesTraining, cuisinesTesting = rf.processDocuments(split = True)
-print(testClassifiers(predTraining, predTesting, cuisinesTraining, cuisinesTesting))
+if __name__ == '__main__':
+    predTraining, predTesting, cuisinesTraining, cuisinesTesting = rf.processDocuments(split = True)
+    print(testClassifiers(predTraining, predTesting, cuisinesTraining, cuisinesTesting))
