@@ -10,17 +10,12 @@ import sklearn.cross_validation as cv
 Method to read the single data file used for splitting the data
 """
 def readTrainingDocument(pathTraining="train.json"):
-    trainRecipes = pd.read_json(pathTraining)
+    try:
+        trainRecipes = pd.read_json(pathTraining)
+    except:
+        print("Data could not be found. Reading train.json as default.")
+        trainRecipes = pd.read_json('train.json')
     return trainRecipes
-
-"""
-Method to read the data files
-"""
-def readDocuments(pathTraining="train_mod.json", pathTesting="test_mod.json"):
-    """read documents using pandas"""
-    trainRecipes = pd.read_json(pathTraining)
-    testRecipes  = pd.read_json(pathTesting)
-    return trainRecipes, testRecipes
 
 """
 Function to split the training data into a training and a test set
