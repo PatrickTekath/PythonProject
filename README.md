@@ -1,7 +1,6 @@
 # PythonProject What's Cooking
 
-The idea of this project is to be able to determine the cuisine of a list of various ingredients with a high credibility.
-This project is created during the [Python seminar](http://www.ini.rub.de/courses/69-Scientific%20Computing%20with%20Python) held at the [Ruhr-University Bochum](http://www.rub.de).
+The idea of this project is to be able to determine the cuisine of a list of various ingredients with a high credibility. This project is created during the [Python seminar](http://www.ini.rub.de/courses/69-Scientific%20Computing%20with%20Python) held at the [Ruhr-University Bochum](http://www.rub.de).
 
 ---
 

@@ -10,20 +10,20 @@ import readFile as rf
 import sklearn.cross_validation as cv
 
 
-# Call method to create tf idf data from the json files
+"""Call method to create tf idf data from the json files"""
 testRecipes, cuisine, predictors_Training, predictors_Test = rf.processDocuments()
 
-# initialize a SVM 
+"""initialize a SVM""" 
 linSVM = SVC(kernel = 'linear', C=1)
 
-# fit the svm to the data
+"""fit the svm to the data"""
 linSVM.fit(predictors_Training, cuisine)
 
-# predict the data
+"""predict the data"""
 predictions = linSVM.predict(predictors_Test)
 
-# store the predictions into a DataFrame
+"""store the predictions into a DataFrame"""
 testRecipes['cuisine'] = predictions
 
-# write results to csv file to be able to submit it to kaggle
+"""write results to csv file to be able to submit it to kaggle"""
 testRecipes[['id','cuisine']].to_csv('results.csv', index = False)
