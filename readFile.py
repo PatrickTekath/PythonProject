@@ -8,6 +8,10 @@ import sklearn.cross_validation as cv
 
 """
 Method to read the single data file used for splitting the data
+
+Throws: ValueError Exception
+thrown if given data file could not be found.
+Solved by reading a default document
 """
 def readTrainingDocument(pathTraining="train.json"):
     try:
@@ -18,7 +22,11 @@ def readTrainingDocument(pathTraining="train.json"):
     return trainRecipes
 
 """
-Function to split the training data into a training and a test set
+Function to split the original training data into a training and a test sub set
+
+Parameters: splitRatio
+Indicates the ratio by which the training and test data should be split
+returns the splitted train and test data
 """
 def splitData(splitRatio):
     trainRecipes = readTrainingDocument('train.json')
@@ -28,7 +36,7 @@ def splitData(splitRatio):
     return training, testing
 
 """
-This procedure uses the training and test data and converts them into training and test data
+This procedure uses the original training and test data and converts them into Term frequency (tf) Inverse Document Frequency (idf) Tupels
 to be able to fit Classifiers on it
 """
 def processDocuments(split=False, splitRatio=0.25, extTrainingFile='', extTestFile=''):
@@ -43,20 +51,15 @@ def processDocuments(split=False, splitRatio=0.25, extTrainingFile='', extTestFi
             ingredientsTest = pd.Series.from_csv(extTestFile, encoding='utf-8')
         else:
             testRecipes = readTrainingDocument('test_mod.json')
-            # extract ingredients for each recipe of the json file for both training and test data
+            """extract ingredients for each recipe of the json file for both training and test data"""
             testRecipes ['ingredients_string'] = [' '.join(i).strip() for i in testRecipes ['ingredients']]
-            # convert ingredients of recipes into a panda list containing the ingredients specific a recipe
+            """convert ingredients of recipes into a panda list containing the ingredients specific a recipe"""
             ingredientsTest = testRecipes ['ingredients_string']
-            
-        # initialize a Tfidf Vectorizer to determine the tf and idf
-        # term frequency and inverse document frequency
-        vectorTraining = TfidfVectorizer(stop_words='english')
-        # train the vectorizer on the training ingredients to determine most common ingredients
-        vectorizedIngredients = vectorTraining.fit_transform(ingredientsTraining)
-        # evaluate important ingredients from the test data
-        vectorizedIngredientsTest = vectorTraining.transform(ingredientsTest)
-        # Make a copy of the different vectorized ingredients
-        predictors_Training = vectorizedIngredients
+        
+        vectorTraining = TfidfVectorizer(stop_words='english')                      # initialize a Tfidf Vectorizer to determine the tf and idf
+        vectorizedIngredients = vectorTraining.fit_transform(ingredientsTraining)   # train the vectorizer on the training ingredients to determine most common ingredients
+        vectorizedIngredientsTest = vectorTraining.transform(ingredientsTest)       # evaluate important ingredients from the test data
+        predictors_Training = vectorizedIngredients                                 # Make a copy of the different vectorized ingredients
         predictors_Test = vectorizedIngredientsTest
         # contains the cuisine for each recipe
         cuisine = trainRecipes['cuisine']
