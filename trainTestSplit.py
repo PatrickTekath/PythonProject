@@ -1,7 +1,6 @@
 """
 Method is used to test various classifiers
 """
-
 from skimage.feature.tests.test_register_translation import test_size_one_dimension_input
 import sklearn
 from sklearn.ensemble import RandomForestClassifier
@@ -12,7 +11,6 @@ from sklearn.svm import SVC
 import numpy as np
 import pandas as pd
 import readFile as rf
-import sklearn.cross_validation as cv
 import sklearn.cross_validation as cv
 
 def testClassifiers(predTraining, predTesting, cuisinesTraining, cuisinesTesting, duration=1, classifier='s'):
